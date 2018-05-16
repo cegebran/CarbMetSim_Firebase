@@ -1,0 +1,10 @@
+Dependencies needed to be installed:
+-async
+-express
+-firebase
+-jquery
+-jsdom
+-long-timeout
+-npm
+-poisson-process
+-pug
