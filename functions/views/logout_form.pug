@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= message
+
+  form(method='POST' action='/logout')
+    button.btn.btn-primary(type='submit') Logout
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

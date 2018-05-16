@@ -1,0 +1,86 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+
+    style.
+      .menuPopoutPanel {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+
+      .menuPopoutPanel a {
+        padding: 6px 6px 6px 30px;
+        white-space: nowrap;
+        text-decoration: none;
+        font-size: 20px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .menuPopoutPanel a:hover {
+        color: #f1f1f1;
+      }
+
+      .menuPopoutPanel .buttonClosePopout {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        transition: 0.5s;
+      }
+
+      #mainContentWindow {
+        transition: margin-left .5s;
+        padding: 16px;
+      }
+
+      @media screen and (max-height: 450px) {
+        .menuPopoutPanel {padding-top: 15px;}
+        .menuPopoutPanel a {font-size: 18px;}
+      }
+
+  body
+    div(id='menuPopoutPaneligationWindow' class='menuPopoutPanel')
+      a(href='javascript:void(0)' class='buttonClosePopout.buttonClosePopout' onclick='closeNavigationMenu()') x
+      a(href='/login' onclick='closeNavigationMenu()') Login/Logout
+      a(href='/signup' onclick='closeNavigationMenu()') Signup
+      a(href='/home' onclick='closeNavigationMenu()') Home
+      a(href='/query' onclick='closeNavigationMenu()') Query Activities
+      a(href='/newSimulation' onclick='closeNavigationMenu()') New Simulation
+      a(href='/newActivity' onclick='closeNavigationMenu()') New Activity
+      a(href='/newFoodSubtype' onclick='closeNavigationMenu()') New Food Subtype
+      a(href='/newExerciseSubtype' onclick='closeNavigationMenu()') New Exercise Subtype
+      a(href='/simulationResultsQuery' onclick='closeNavigationMenu()') Query Simulation Results
+      a(href='/editActivitySubtype' onclick='closeNavigationMenu()') Edit Activity Subtypes
+
+    div(id='mainContentWindow')
+      span(style='font-size:30px;cursor:pointer' onclick='openNavigationMenu()') &#9776; Menu
+      block content
+      
+    script.
+      function openNavigationMenu() {
+        document.getElementById("menuPopoutPaneligationWindow").style.width = "270px";
+        document.getElementById("mainContentWindow").style.marginLeft = "270px";
+      }
+
+      function closeNavigationMenu() {
+        document.getElementById("menuPopoutPaneligationWindow").style.width = "0";
+        document.getElementById("mainContentWindow").style.marginLeft= "0";
+        sleep(1);
+      }

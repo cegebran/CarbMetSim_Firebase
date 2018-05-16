@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Login
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='email') Email:
+      input#email.form-control(type='text', placeholder='' name='email' value=(''))
+      label(for='password') Password:
+      input#password.form-control(type='text', placeholder='' name='password' value=(''))
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

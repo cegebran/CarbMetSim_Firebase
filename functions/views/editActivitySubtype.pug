@@ -1,0 +1,334 @@
+extends layout
+
+block content
+    h1 Edit Activity Subtype
+
+    form(method='POST' action='' onsubmit="return validateForm()")
+        div.form-group(id='editActivityForm')
+            label(id='activityMainTypeLabel') Activity Main Type:
+            select#activityMainTypeSelect.form-control(type='select', placeholder='', name='activityMainTypeSelect', required='false', onchange='activityTypeChange(this.id)')
+                for mainType in mainTypes
+                    option(value=mainType._id) #{mainType.name}
+            br()
+            label(id='selectFoodTypeLabel') Food Type:
+            select#foodActivitySelect.form-control(type='select', placeholder='', name='foodActivitySelect', required='false', onchange='foodTypeChange(this.id, this.value)')
+                for foodActivity in foodActivities
+                    option(value=foodActivity.values) #{foodActivity.name}
+            label(id='selectExerciseLabel') Exercise Type:
+            select#exerciseActivitySelect.form-control(type='select', placeholder='', name='exerciseActivitySelect', required='false', onchange='exerciseTypeChange(this.id, this.value)')
+                for exerciseActivity in exerciseActivities
+                    option(value=exerciseActivity.values) #{exerciseActivity.name}
+            br()
+
+            label(for='newFoodName', id="newFoodNameLabel0") Name:
+            input(type='text', name='newFoodName0', id="newFoodNameInput0")
+            label(for='newFoodServingSize', id="newFoodServingSizeLabel0") Serving Size: 
+            input(type='number', min='0', name='newFoodServingSize0', id="newFoodServingSizeInput0", onkeypress="return isNumberKey(event)")
+            label(for='newFoodFat', id="newFoodFatLabel0") Fat: 
+            input(type='number', min='0', name='newFoodFat0', id="newFoodFatInput0", onkeypress="return isNumberKey(event)")
+            label(for='newFoodProtein', id="newFoodProteinLabel0") Protein: 
+            input(type='number', min='0', name='newFoodProtein0', id="newFoodProteinInput0", onkeypress="return isNumberKey(event)")
+            label(for='newFoodRAG', id="newFoodRAGLabel0") Readily Available Glucose (RAG): 
+            input(type='number', min='0', name='newFoodRAG0', id="newFoodRAGInput0", onkeypress="return isNumberKey(event)")
+            label(for='newFoodSAG', id="newFoodSAGLabel0") Slowly Available Glucose (SAG): 
+            input(type='number', min='0', name='newFoodSAG0', id="newFoodSAGInput0",onkeypress="return isNumberKey(event)")
+
+            label(for='newExerciseName', id="newExerciseNameLabel0") Name: 
+            input(type='text', name='newExerciseName0', id="newExerciseNameInput0")
+            label(for='newExerciseIntensity', id="newExerciseIntensityLabel0") Intensity: 
+            input(type='number', min='0', name='newExerciseIntensity0', id="newExerciseIntensityInput0", onkeypress="return isNumberKey(event)")
+            input(type='number', min='0', name='activityTypeId', id="activityTypeId")
+            br(id='br10')
+            button.btn.btn-primary(type='submit', id="submitButton") Submit  
+
+        script.
+            document.getElementById("selectFoodTypeLabel").style.display = "none";
+            document.getElementById("foodActivitySelect").style.display = "none";
+            document.getElementById("selectExerciseLabel").style.display = "none";
+            document.getElementById("exerciseActivitySelect").style.display = "none";
+            document.getElementById("newFoodNameLabel0").style.display = "none";
+            document.getElementById("newFoodNameInput0").style.display = "none";
+            document.getElementById("newFoodServingSizeLabel0").style.display = "none";
+            document.getElementById("newFoodServingSizeInput0").style.display = "none";
+            document.getElementById("newFoodFatLabel0").style.display = "none";
+            document.getElementById("newFoodFatInput0").style.display = "none";
+            document.getElementById("newFoodProteinLabel0").style.display = "none";
+            document.getElementById("newFoodProteinInput0").style.display = "none";
+            document.getElementById("newFoodRAGLabel0").style.display = "none";
+            document.getElementById("newFoodRAGInput0").style.display = "none";
+            document.getElementById("newFoodSAGLabel0").style.display = "none";
+            document.getElementById("newFoodSAGInput0").style.display = "none";
+            document.getElementById("newExerciseNameLabel0").style.display = "none";
+            document.getElementById("newExerciseNameInput0").style.display = "none";
+            document.getElementById("newExerciseIntensityLabel0").style.display = "none";
+            document.getElementById("newExerciseIntensityInput0").style.display = "none";
+            document.getElementById("submitButton").style.display = "none";
+            document.getElementById("activityTypeId").style.display = "none";
+
+            function activityTypeChange(id){
+                if(document.getElementById(id).value == "Food"){
+                    document.getElementById("foodActivitySelect").value = ",,Select Food,,Select Food,,";
+                    document.getElementById("selectFoodTypeLabel").style.display = "block";
+                    document.getElementById("foodActivitySelect").style.display = "block";
+                    document.getElementById("selectExerciseLabel").style.display = "none";
+                    document.getElementById("exerciseActivitySelect").style.display = "none";
+                    document.getElementById("newFoodNameLabel0").style.display = "none";
+                    document.getElementById("newFoodNameInput0").style.display = "none";
+                    document.getElementById("newFoodServingSizeLabel0").style.display = "none";
+                    document.getElementById("newFoodServingSizeInput0").style.display = "none";
+                    document.getElementById("newFoodFatLabel0").style.display = "none";
+                    document.getElementById("newFoodFatInput0").style.display = "none";
+                    document.getElementById("newFoodProteinLabel0").style.display = "none";
+                    document.getElementById("newFoodProteinInput0").style.display = "none";
+                    document.getElementById("newFoodRAGLabel0").style.display = "none";
+                    document.getElementById("newFoodRAGInput0").style.display = "none";
+                    document.getElementById("newFoodSAGLabel0").style.display = "none";
+                    document.getElementById("newFoodSAGInput0").style.display = "none";
+                    document.getElementById("newExerciseNameLabel0").style.display = "none";
+                    document.getElementById("newExerciseNameInput0").style.display = "none";
+                    document.getElementById("newExerciseIntensityLabel0").style.display = "none";
+                    document.getElementById("newExerciseIntensityInput0").style.display = "none";
+                    document.getElementById("submitButton").style.display = "none";
+                    document.getElementById("activityTypeId").style.display = "none";
+                }else if(document.getElementById(id).value == "Exercise"){
+                    document.getElementById("exerciseActivitySelect").value = "Select Exercise,Select Exercise,";
+                    document.getElementById("selectFoodTypeLabel").style.display = "none";
+                    document.getElementById("foodActivitySelect").style.display = "none";
+                    document.getElementById("selectExerciseLabel").style.display = "block";
+                    document.getElementById("exerciseActivitySelect").style.display = "block";
+                    document.getElementById("newFoodNameLabel0").style.display = "none";
+                    document.getElementById("newFoodNameInput0").style.display = "none";
+                    document.getElementById("newFoodServingSizeLabel0").style.display = "none";
+                    document.getElementById("newFoodServingSizeInput0").style.display = "none";
+                    document.getElementById("newFoodFatLabel0").style.display = "none";
+                    document.getElementById("newFoodFatInput0").style.display = "none";
+                    document.getElementById("newFoodProteinLabel0").style.display = "none";
+                    document.getElementById("newFoodProteinInput0").style.display = "none";
+                    document.getElementById("newFoodRAGLabel0").style.display = "none";
+                    document.getElementById("newFoodRAGInput0").style.display = "none";
+                    document.getElementById("newFoodSAGLabel0").style.display = "none";
+                    document.getElementById("newFoodSAGInput0").style.display = "none";
+                    document.getElementById("newExerciseNameLabel0").style.display = "none";
+                    document.getElementById("newExerciseNameInput0").style.display = "none";
+                    document.getElementById("newExerciseIntensityLabel0").style.display = "none";
+                    document.getElementById("newExerciseIntensityInput0").style.display = "none";
+                    document.getElementById("submitButton").style.display = "none";
+                    document.getElementById("activityTypeId").style.display = "none";
+                }else{
+                    document.getElementById("selectFoodTypeLabel").style.display = "none";
+                    document.getElementById("foodActivitySelect").style.display = "none";
+                    document.getElementById("selectExerciseLabel").style.display = "none";
+                    document.getElementById("exerciseActivitySelect").style.display = "none";
+                    document.getElementById("newFoodNameLabel0").style.display = "none";
+                    document.getElementById("newFoodNameInput0").style.display = "none";
+                    document.getElementById("newFoodServingSizeLabel0").style.display = "none";
+                    document.getElementById("newFoodServingSizeInput0").style.display = "none";
+                    document.getElementById("newFoodFatLabel0").style.display = "none";
+                    document.getElementById("newFoodFatInput0").style.display = "none";
+                    document.getElementById("newFoodProteinLabel0").style.display = "none";
+                    document.getElementById("newFoodProteinInput0").style.display = "none";
+                    document.getElementById("newFoodRAGLabel0").style.display = "none";
+                    document.getElementById("newFoodRAGInput0").style.display = "none";
+                    document.getElementById("newFoodSAGLabel0").style.display = "none";
+                    document.getElementById("newFoodSAGInput0").style.display = "none";
+                    document.getElementById("newExerciseNameLabel0").style.display = "none";
+                    document.getElementById("newExerciseNameInput0").style.display = "none";
+                    document.getElementById("newExerciseIntensityLabel0").style.display = "none";
+                    document.getElementById("newExerciseIntensityInput0").style.display = "none";
+                    document.getElementById("submitButton").style.display = "none";
+                    document.getElementById("activityTypeId").style.display = "none";
+                }
+            }
+
+            function foodTypeChange(id, value){
+                if(value == ",,Select Food,,Select Food,,"){
+                    document.getElementById("newFoodNameLabel0").style.display = "none";
+                    document.getElementById("newFoodNameInput0").style.display = "none";
+                    document.getElementById("newFoodServingSizeLabel0").style.display = "none";
+                    document.getElementById("newFoodServingSizeInput0").style.display = "none";
+                    document.getElementById("newFoodFatLabel0").style.display = "none";
+                    document.getElementById("newFoodFatInput0").style.display = "none";
+                    document.getElementById("newFoodProteinLabel0").style.display = "none";
+                    document.getElementById("newFoodProteinInput0").style.display = "none";
+                    document.getElementById("newFoodRAGLabel0").style.display = "none";
+                    document.getElementById("newFoodRAGInput0").style.display = "none";
+                    document.getElementById("newFoodSAGLabel0").style.display = "none";
+                    document.getElementById("newFoodSAGInput0").style.display = "none";
+                    document.getElementById("newExerciseNameLabel0").style.display = "none";
+                    document.getElementById("newExerciseNameInput0").style.display = "none";
+                    document.getElementById("newExerciseIntensityLabel0").style.display = "none";
+                    document.getElementById("newExerciseIntensityInput0").style.display = "none";
+                    document.getElementById("submitButton").style.display = "none";
+                    document.getElementById("activityTypeId").style.display = "none";
+                }else{  // food selected
+                    var splitValueString = value.split(",");
+                    document.getElementById("newFoodNameInput0").value = splitValueString[4];
+                    document.getElementById("newFoodServingSizeInput0").value = splitValueString[6];
+                    document.getElementById("newFoodFatInput0").value = splitValueString[3];
+                    document.getElementById("newFoodProteinInput0").value = splitValueString[5];
+                    document.getElementById("newFoodRAGInput0").value = splitValueString[0];
+                    document.getElementById("newFoodSAGInput0").value = splitValueString[1];
+                    document.getElementById("activityTypeId").value = splitValueString[2];
+
+                    document.getElementById("newFoodNameInput0").style.borderColor = "inherit";
+                    document.getElementById("newFoodServingSizeInput0").style.borderColor = "inherit";
+                    document.getElementById("newFoodFatInput0").style.borderColor = "inherit";
+                    document.getElementById("newFoodProteinInput0").style.borderColor = "inherit";
+                    document.getElementById("newFoodRAGInput0").style.borderColor = "inherit";
+                    document.getElementById("newFoodSAGInput0").style.borderColor = "inherit";
+
+                    document.getElementById("newFoodNameLabel0").style.display = "block";
+                    document.getElementById("newFoodNameInput0").style.display = "block";
+                    document.getElementById("newFoodServingSizeLabel0").style.display = "block";
+                    document.getElementById("newFoodServingSizeInput0").style.display = "block";
+                    document.getElementById("newFoodFatLabel0").style.display = "block";
+                    document.getElementById("newFoodFatInput0").style.display = "block";
+                    document.getElementById("newFoodProteinLabel0").style.display = "block";
+                    document.getElementById("newFoodProteinInput0").style.display = "block";
+                    document.getElementById("newFoodRAGLabel0").style.display = "block";
+                    document.getElementById("newFoodRAGInput0").style.display = "block";
+                    document.getElementById("newFoodSAGLabel0").style.display = "block";
+                    document.getElementById("newFoodSAGInput0").style.display = "block";
+                    document.getElementById("newExerciseNameLabel0").style.display = "none";
+                    document.getElementById("newExerciseNameInput0").style.display = "none";
+                    document.getElementById("newExerciseIntensityLabel0").style.display = "none";
+                    document.getElementById("newExerciseIntensityInput0").style.display = "none";
+                    document.getElementById("submitButton").style.display = "block";
+                    document.getElementById("activityTypeId").style.display = "none";
+                }
+            }
+
+            function exerciseTypeChange(id, value){
+                if(value == "Select Exercise,Select Exercise,"){
+                    document.getElementById("newFoodNameLabel0").style.display = "none";
+                    document.getElementById("newFoodNameInput0").style.display = "none";
+                    document.getElementById("newFoodServingSizeLabel0").style.display = "none";
+                    document.getElementById("newFoodServingSizeInput0").style.display = "none";
+                    document.getElementById("newFoodFatLabel0").style.display = "none";
+                    document.getElementById("newFoodFatInput0").style.display = "none";
+                    document.getElementById("newFoodProteinLabel0").style.display = "none";
+                    document.getElementById("newFoodProteinInput0").style.display = "none";
+                    document.getElementById("newFoodRAGLabel0").style.display = "none";
+                    document.getElementById("newFoodRAGInput0").style.display = "none";
+                    document.getElementById("newFoodSAGLabel0").style.display = "none";
+                    document.getElementById("newFoodSAGInput0").style.display = "none";
+                    document.getElementById("newExerciseNameLabel0").style.display = "none";
+                    document.getElementById("newExerciseNameInput0").style.display = "none";
+                    document.getElementById("newExerciseIntensityLabel0").style.display = "none";
+                    document.getElementById("newExerciseIntensityInput0").style.display = "none";
+                    document.getElementById("submitButton").style.display = "none";
+                    document.getElementById("activityTypeId").style.display = "none";
+                }else{  // exercise selected
+                    var splitValueString = value.split(",");
+                    document.getElementById("newExerciseNameInput0").value = splitValueString[1];
+                    document.getElementById("newExerciseIntensityInput0").value = splitValueString[2];
+                    document.getElementById("activityTypeId").value = splitValueString[0];
+
+                    document.getElementById("newExerciseNameInput0").style.borderColor = "inherit";
+                    document.getElementById("newExerciseIntensityInput0").style.borderColor = "inherit";
+
+                    document.getElementById("newFoodNameLabel0").style.display = "none";
+                    document.getElementById("newFoodNameInput0").style.display = "none";
+                    document.getElementById("newFoodServingSizeLabel0").style.display = "none";
+                    document.getElementById("newFoodServingSizeInput0").style.display = "none";
+                    document.getElementById("newFoodFatLabel0").style.display = "none";
+                    document.getElementById("newFoodFatInput0").style.display = "none";
+                    document.getElementById("newFoodProteinLabel0").style.display = "none";
+                    document.getElementById("newFoodProteinInput0").style.display = "none";
+                    document.getElementById("newFoodRAGLabel0").style.display = "none";
+                    document.getElementById("newFoodRAGInput0").style.display = "none";
+                    document.getElementById("newFoodSAGLabel0").style.display = "none";
+                    document.getElementById("newFoodSAGInput0").style.display = "none";
+                    document.getElementById("newExerciseNameLabel0").style.display = "block";
+                    document.getElementById("newExerciseNameInput0").style.display = "block";
+                    document.getElementById("newExerciseIntensityLabel0").style.display = "block";
+                    document.getElementById("newExerciseIntensityInput0").style.display = "block";
+                    document.getElementById("submitButton").style.display = "block";
+                    document.getElementById("activityTypeId").style.display = "none";
+                }
+            }
+
+            function validateForm(){
+                var issues = [];
+
+                if(document.getElementById("activityMainTypeSelect").value == "Food"){
+                    if(document.getElementById("foodActivitySelect").value == ",,Select Food,,Select Food,,"){
+                        // no submit button displayed at this point
+                    }else{
+                        if(document.getElementById("newFoodNameInput0").value == ""){
+                            issues.push("- Enter a food name");
+                            document.getElementById("newFoodNameInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newFoodNameInput0").style.borderColor = "inherit";
+                        }
+
+                        if(document.getElementById("newFoodServingSizeInput0").value == ""){
+                            issues.push("- Enter a food serving size");
+                            document.getElementById("newFoodServingSizeInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newFoodServingSizeInput0").style.borderColor = "inherit";
+                        }
+
+                        if(document.getElementById("newFoodFatInput0").value == ""){
+                            issues.push("- Enter a food fat content");
+                            document.getElementById("newFoodFatInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newFoodFatInput0").style.borderColor = "inherit";
+                        }
+
+                        if(document.getElementById("newFoodProteinInput0").value == ""){
+                            issues.push("- Enter a food protein content");
+                            document.getElementById("newFoodProteinInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newFoodProteinInput0").style.borderColor = "inherit";
+                        }
+
+                        if(document.getElementById("newFoodRAGInput0").value == ""){
+                            issues.push("- Enter a food readily available glucose");
+                            document.getElementById("newFoodRAGInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newFoodRAGInput0").style.borderColor = "inherit";
+                        }
+
+                        if(document.getElementById("newFoodSAGInput0").value == ""){
+                            issues.push("- Enter a food slowly available glucose");
+                            document.getElementById("newFoodSAGInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newFoodSAGInput0").style.borderColor = "inherit";
+                        }
+                    }
+                }else if(document.getElementById("activityMainTypeSelect").value == "Exercise"){
+                    if(document.getElementById("exerciseActivitySelect").value == "Select Exercise,Select Exercise,"){
+                        // no submit button displayed at this point
+                    }else{
+                        if(document.getElementById("newExerciseNameInput0").value == ""){
+                            issues.push("- Enter an exercise name");
+                            document.getElementById("newExerciseNameInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newExerciseNameInput0").style.borderColor = "inherit";
+                        }
+
+                        if(document.getElementById("newExerciseIntensityInput0").value == ""){
+                            issues.push("- Enter an exercise intensity");
+                            document.getElementById("newExerciseIntensityInput0").style.borderColor = "red";
+                        }else{
+                            document.getElementById("newExerciseIntensityInput0").style.borderColor = "inherit";
+                        }
+                    }
+                }else{
+                    // no submit button displayed at this point
+                }
+
+                if(issues.length == 0){
+                    return true;
+                }else{
+                    var iCt = 0;
+                    var alertString = "";
+                    while(issues[iCt] != null){
+                        alertString += issues[iCt] + "\n";
+                        iCt++;
+                    }
+                    alert(alertString);
+                    return false;
+                }
+            }

@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h1 New Food Subtype
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='food_name') Food Name:
+      input#value.form-control(type='text', placeholder='', name='food_name', required='true', value=(''))
+    div.form-group
+      label(for='servingSize') Servings:
+      input#value.form-control(type='number', min='0', placeholder='', name='servingSize', required='true', value=(''), onkeypress="return isNumberKey(event)")
+    div.form-group
+      label(for='RAG') Readily Available Glucose:
+      input#value.form-control(type='number', min='0', placeholder='', name='RAG', required='true', value=(''), onkeypress="return isNumberKey(event)")
+    div.form-group
+      label(for='SAG') Slowly Available Glucose:
+      input#value.form-control(type='number', min='0', placeholder='', name='SAG', required='true', value=(''), onkeypress="return isNumberKey(event)")
+    div.form-group
+      label(for='protein') Protein:
+      input#value.form-control(type='number', min='0', placeholder='', name='protein', required='true', value=(''), onkeypress="return isNumberKey(event)")
+    div.form-group
+      label(for='fat') Fat:
+      input#value.form-control(type='number', min='0', placeholder='', name='fat', required='true', value=(''), onkeypress="return isNumberKey(event)")
+    button.btn.btn-primary(type='submit') Submit
+
+    script.
+      function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)){
+          return false;
+        }else{
+          return true;
+        }
+      }
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

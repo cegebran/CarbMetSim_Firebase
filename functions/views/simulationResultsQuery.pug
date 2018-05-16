@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    h1 Query Simulation Results
+
+    form(method='POST' action='' onsubmit="return validateForm()")
+        div.form-group(id='querySimResults')
+            label(id='simulationSelectionLabel') Simulation:
+            select#simulation.form-control(type='select', placeholder='', name='simulation', required='false')
+                for sim in simulations
+                    option(value=sim._id) #{sim.name}
+            br(id='br1')
+            button.btn.btn-primary(type='submit', id="submitButton") Submit
+
+
+        script.
+            function validateForm(){
+
+                var issues = [];
+
+                var simulationSelection = document.getElementById("simulation").value;
+                if(simulationSelection == "Select a Simulation"){
+                    issues.push("- Choose a simulation");
+                    document.getElementById("simulation").style.borderColor = "red";
+                }else{
+                    document.getElementById("simulation").style.borderColor = "inherit";
+                }
+
+                if(issues.length == 0){
+                    return true;
+                }else{
+                    var iCt = 0;
+                    var alertString = "";
+                    while(issues[iCt] != null){
+                        alertString += issues[iCt] + "\n";
+                        iCt++;
+                    }
+                    alert(alertString);
+                    return false;
+                }
+            }

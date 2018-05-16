@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em Diabetes Self-Management App], a very basic Express website running on Google Firebase.
+
+  h1 Dynamic content
+
+  if error
+    p Error getting dynamic content.
+  else
+    p The library has the following record counts:
+
+    ul
+	each val in [1, 2, 3, 4, 5]
+    		li= val

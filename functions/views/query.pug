@@ -1,0 +1,282 @@
+extends layout
+
+block content
+  h1 Query Activities
+
+  form(method='POST' action='' onsubmit="return validateForm()")
+    div.form-group(id='activityTypeGroup')
+      label(id='activitytype') Activity Type:
+      select#activitytypeSel.form-control(type='select', placeholder='', name='activity', required='true', onchange='activityTypeChange(this.id)')
+        for activitytype in activityTypes
+            option(value=activitytype._id) #{activitytype.name}
+
+    div.form-group(id='foodActivityTypeGroup')
+      label(id='foodActivitytype') Food Activity Types:
+      select#foodActivitytypeSel.form-control(type='select', placeholder='' name='foodActivityType' required='false' )
+        for foodActivityType in foodActivityTypes
+            option(value=foodActivityType._id) #{foodActivityType.name}
+
+    div.form-group(id='exerciseActivityTypeGroup')
+      label(id='exerciseActivitytype') Exercise Activity Types:
+      select#exerciseActivitytypeSel.form-control(type='select', placeholder='' name='exerciseActivity' required='false' )
+        for exerciseActivitytype in exerciseActivityTypes
+            option(value=exerciseActivitytype._id) #{exerciseActivitytype.name}
+
+    label(id='timeRangeAllTime') Time Range/All-Time:
+    select#allTimeRangeSelect.form-control(type='select', placeholder='', name='allTimeRangeSelect', required='true', onchange='allTimeRangeChange(this.id)')
+      for allTimeRange in allTimeRanges
+          option(value=allTimeRange._id) #{allTimeRange.name}
+
+    div.form-group(id='startDateGroup')
+      br()
+      label(id='start_date') Start Date:
+      div.form-inline(id='startDateInLine0')
+        select#startMonth0.form-control(type='select', placeholder='', name='startMonthSelection0', required='true', onchange='startMonthChange(this.value)')
+          for month in months
+            option(value=month._id) #{month.name}
+        label(id="startDateSep1") / 
+        select#startDay0.form-control(type='select', placeholder='', name='startDaySelection0', required='true', onchange='startDayChange(this.value)')
+          for day in days31
+            option(value=day._id) #{day.name}
+        label(id="startDateSep2") / 
+        select#startYear0.form-control(type='select', placeholder='', name='startYearSelection0', required='true', onchange='startYearChange(this.value)')
+          for year in years
+            option(value=year._id) #{year.name}
+
+    div.form-group(id='startTimeGroup')
+      label(id="start_time") Start Time: 
+      div.form-inline(id='startTimeInLine0')
+        select#startHour0.form-control(type='select', placeholder='', name='startHourSelection0', required='true', onchange='startHourChange(this.value)')
+          for hTime in hours
+            option(value=hTime._id) #{hTime.name}
+        label(id="startTimeSep1") : 
+        select#startMinute0.form-control(type='select', placeholder='', name='startMinuteSelection0', required='true', onchange='startMinuteChange(this.value)')
+          for mTime in minutes
+            option(value=mTime._id) #{mTime.name}
+        select#startAmPm0.form-control(type='select', placeholder='', name='startAmPmSelection0', required='true')
+          for amPmSel in amPms
+            option(value=amPmSel._id) #{amPmSel.name}
+
+    div.form-group(id='endDateGroup')
+      label(id='end_date') End Date:
+      div.form-inline(id='endDateInLine0')
+        select#endMonth0.form-control(type='select', placeholder='', name='endMonthSelection0', required='true', onchange='endMonthChange(this.value)')
+          for month in months
+            option(value=month._id) #{month.name}
+        label(id="endDateSep1") / 
+        select#endDay0.form-control(type='select', placeholder='', name='endDaySelection0', required='true', onchange='endDayChange(this.value)')
+          for day in days31
+            option(value=day._id) #{day.name}
+        label(id="endDateSep2") / 
+        select#endYear0.form-control(type='select', placeholder='', name='endYearSelection0', required='true', onchange='endYearChange(this.value)')
+          for year in years
+            option(value=year._id) #{year.name}
+
+    div.form-group(id='endTimeGroup')
+      label(id="end_time") End Time: 
+      div.form-inline(id='endTimeInLine0')
+        select#endHour0.form-control(type='select', placeholder='', name='endHourSelection0', required='true', onchange='endHourChange(this.value)')
+          for hTime in hours
+            option(value=hTime._id) #{hTime.name}
+        label(id="endtimeSep1") : 
+        select#endMinute0.form-control(type='select', placeholder='', name='endMinuteSelection0', required='true', onchange='endMinuteChange(this.value)')
+          for mTime in minutes
+            option(value=mTime._id) #{mTime.name}
+        select#endAmPm0.form-control(type='select', placeholder='', name='endAmPmSelection0', required='true')
+          for amPmSel in amPms
+            option(value=amPmSel._id) #{amPmSel.name}
+
+    br()
+    br()
+    button.btn.btn-primary(type='submit') Submit
+
+    script.
+      var startMonth = "";
+      var startDay = "";
+      var startYear = "";
+      var startHour = "";
+      var startMinute = "";
+      var endMonth = "";
+      var endDay = "";
+      var endYear = "";
+      var endHour = "";
+      var endMinute = "";
+
+      document.getElementById("foodActivitytype").style.display = "none";
+      document.getElementById("foodActivitytypeSel").style.display = "none";
+      document.getElementById("exerciseActivitytype").style.display = "none";
+      document.getElementById("exerciseActivitytypeSel").style.display = "none";
+
+      document.getElementById("startDateGroup").style.display = "none";
+      document.getElementById("startTimeGroup").style.display = "none";
+      document.getElementById("endDateGroup").style.display = "none";
+      document.getElementById("endTimeGroup").style.display = "none";
+
+      function activityTypeChange(id){
+        var activities = document.getElementById(id);
+        if(activities.value == "Food"){
+          document.getElementById("foodActivitytype").style.display = "block";
+          document.getElementById("foodActivitytypeSel").style.display = "block";
+          document.getElementById("exerciseActivitytype").style.display = "none";
+          document.getElementById("exerciseActivitytypeSel").style.display = "none";
+        }
+        if(activities.value == "Exercise"){
+          document.getElementById("foodActivitytype").style.display = "none";
+          document.getElementById("foodActivitytypeSel").style.display = "none";
+          document.getElementById("exerciseActivitytype").style.display = "block";
+          document.getElementById("exerciseActivitytypeSel").style.display = "block";
+        }
+        if(activities.value == "All Activity Types"){
+          document.getElementById("foodActivitytype").style.display = "none";
+          document.getElementById("foodActivitytypeSel").style.display = "none";
+          document.getElementById("exerciseActivitytype").style.display = "none";
+          document.getElementById("exerciseActivitytypeSel").style.display = "none";
+        }
+      }
+
+      function allTimeRangeChange(id){
+        if(document.getElementById("allTimeRangeSelect").value == "Select Date and Time Range"){
+          document.getElementById("startDateGroup").style.display = "block";
+          document.getElementById("startTimeGroup").style.display = "block";
+          document.getElementById("endDateGroup").style.display = "block";
+          document.getElementById("endTimeGroup").style.display = "block";
+        }else{  // All-time
+          document.getElementById("startDateGroup").style.display = "none";
+          document.getElementById("startTimeGroup").style.display = "none";
+          document.getElementById("endDateGroup").style.display = "none";
+          document.getElementById("endTimeGroup").style.display = "none";
+        }
+      }
+
+      function startMonthChange(value){
+        startMonth = value;
+      }
+
+      function startDayChange(value){
+        startDay = value;
+      }
+
+      function startYearChange(value){
+        startYear = value;
+      }
+
+      function startHourChange(value){
+        startHour = value;
+      }
+
+      function startMinuteChange(value){
+        startMinute = value;
+      }
+
+      function endMonthChange(value){
+        endMonth = value;
+      }
+
+      function endDayChange(value){
+        endDay = value;
+      }
+
+      function endYearChange(value){
+        endYear = value;
+      }
+
+      function endHourChange(value){
+        endHour = value;
+      }
+
+      function endMinuteChange(value){
+        endMinute = value;
+      }
+
+      function validateForm(){
+        var issues = [];
+        if(document.getElementById("allTimeRangeSelect").value == "Select Date and Time Range"){
+          if(startMonth == "" || startMonth == "Month"){
+            issues.push("- A start month needs to be selected");
+            document.getElementById("startMonth0").style.borderColor = "red";
+          }else{
+            document.getElementById("startMonth0").style.borderColor = "inherit";
+          }
+
+          if(startDay == "" || startDay == "Day"){
+            issues.push("- A start day needs to be selected");
+            document.getElementById("startDay0").style.borderColor = "red";
+          }else{
+            document.getElementById("startDay0").style.borderColor = "inherit";
+          }
+
+          if(startYear == "" || startYear == "Year"){
+            issues.push("- A start year needs to be selected");
+            document.getElementById("startYear0").style.borderColor = "red";
+          }else{
+            document.getElementById("startYear0").style.borderColor = "inherit";
+          }
+
+          if(startHour == "" || startHour == "Hour"){
+            issues.push("- A start hour needs to be selected");
+            document.getElementById("startHour0").style.borderColor = "red";
+          }else{
+            document.getElementById("startHour0").style.borderColor = "inherit";
+          }
+
+          if(startMinute == "" || startMinute == "Minute"){
+            issues.push("- A start minute needs to be selected");
+            document.getElementById("startMinute0").style.borderColor = "red";
+          }else{
+            document.getElementById("startMinute0").style.borderColor = "inherit";
+          }
+
+          if(endMonth == "" || endMonth == "Month"){
+            issues.push("- A end month needs to be selected");
+            document.getElementById("endMonth0").style.borderColor = "red";
+          }else{
+            document.getElementById("endMonth0").style.borderColor = "inherit";
+          }
+
+          if(endDay == "" || endDay == "Day"){
+            issues.push("- A end day needs to be selected");
+            document.getElementById("endDay0").style.borderColor = "red";
+          }else{
+            document.getElementById("endDay0").style.borderColor = "inherit";
+          }
+
+          if(endYear == "" || endYear == "Year"){
+            issues.push("- A end year needs to be selected");
+            document.getElementById("endYear0").style.borderColor = "red";
+          }else{
+            document.getElementById("endYear0").style.borderColor = "inherit";
+          }
+
+          if(endHour == "" || endHour == "Hour"){
+            issues.push("- A end hour needs to be selected");
+            document.getElementById("endHour0").style.borderColor = "red";
+          }else{
+            document.getElementById("endHour0").style.borderColor = "inherit";
+          }
+
+          if(endMinute == "" || endMinute == "Minute"){
+            issues.push("- A end minute needs to be selected");
+            document.getElementById("endMinute0").style.borderColor = "red";
+          }else{
+            document.getElementById("endMinute0").style.borderColor = "inherit";
+          }
+        }
+
+        if(issues.length == 0){
+          return true;
+        }else{
+          var iCt = 0;
+          var alertString = "";
+          while(issues[iCt] != null){
+            alertString += issues[iCt] + "\n";
+            iCt++;
+          }
+          alert(alertString);
+          return false;
+        }
+      }
+
+  if errors 
+    ul
+      for error in errors
+        li!= error
