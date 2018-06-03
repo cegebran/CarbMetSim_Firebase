@@ -1,0 +1,8 @@
+Changes were made as per the new code.
+
+To be done:
+1. Need to check the values some of them are not in the correct range(Logical errors might be the reason)
+2. Set parameters of some classes were working but some changes need to be made for the front end to make them effective.
+3. Human body class should have some makor changes regarding the reading of the values and work of TICKs part.
+
+These are the target for the next week
