@@ -151,22 +151,24 @@ class HumanBody{
     }
 
 
-    erf(x){
-        // erf(x) = 2/sqrt(pi) * integrate(from=0, to=x, e^-(t^2) ) dt
-        // with using Taylor expansion, 
-        //        = 2/sqrt(pi) * sigma(n=0 to +inf, ((-1)^n * x^(2n+1))/(n! * (2n+1)))
-        // calculationg n=0 to 50 bellow (note that inside sigma equals x when n = 0, and 50 may be enough)
-        var m = 1.00;
-        var s = 1.00;
-        var sum = x * 1.0;
-        for(var i = 1; i < 50; i++){
-            m *= i;
-            s *= -1;
-            sum += (s * Math.pow(x, 2.0 * i + 1.0)) / (m * (2.0 * i + 1.0));
-        }  
-        return 2 * sum / Math.sqrt(3.14159265358979);
-    }
+            erf(x) {
+  // save the sign of x
+                var sign = (x >= 0) ? 1 : -1;
+                x = Math.abs(x);
 
+  // constants
+                 var a1 =  0.254829592;
+                 var a2 = -0.284496736;
+                 var a3 =  1.421413741;
+                 var a4 = -1.453152027;
+                 var a5 =  1.061405429;
+                 var p  =  0.3275911;
+
+  // A&S formula 7.1.26
+                var t = 1.0/(1.0 + p*x);
+                var y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+  return sign * y; // erf(-x) = -erf(x);
+}
     //Original SimCtl Codde now put here
     elapsed_days(){
          return this.ticks / TICKS_PER_DAY; 
@@ -199,7 +201,7 @@ class HumanBody{
     insulinImpactOnGlycogenBreakdownInLiver(){
     	var insulin_level = this.blood.insulin;
     	var scale = 0.5*(1 + this.erf((insulin_level - this.insulinImpactGlycogenSynthesisInLiver_Mean)/(this.insulinImpactGlycogenSynthesisInLiver_StdDev*Math.sqrt(2))));
-    	return (1.0 - scale);
+        return (1.0 - scale);
     }
 
     insulinImpactOnGlycogenSynthesisInLiver(){

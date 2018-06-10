@@ -55,6 +55,7 @@ class Muscles {
         
         var x; // to hold the random samples
         var currEnergyNeed = this.body.currentEnergyExpenditure();
+        var insulin_level = this.body.blood.insulin; 
 
         if( this.body.isExercising() ) {
             x =  rand__;
@@ -74,7 +75,7 @@ class Muscles {
         var glycogenShare = 0;
         //Need to check this
         //var intensity = this.body.execiseTypes[this.body.currExercise].intensity_;
-        var intensity = 7;
+        var intensity = 7;////////////////////////////////////
         if(intensity >= 6){
             glycogenShare = 0.3;
         }
@@ -103,13 +104,14 @@ class Muscles {
                 x = this.glycolysisMax_ * this.body.bodyWeight_;
             }
             
-            this.glycolysisPerTick = x + ((intensity - 1) / 17) * ((this.glycolysisMax_ + this.body.bodyWeight_) - x);
+            this.glycolysisPerTick = x + ((intensity - 1) / 17) * ((this.glycolysisMax_ * this.body.bodyWeight_) - x);
         }
         else{
             this.glycolysisPerTick = this.glycolysisMax_ * this.body.bodyWeight_;
         }
         
         this.glycogen -= this.glycolysisPerTick;
+        console.log("/////////////////////////" + this.glycogen);
         this.glycogenBreakdownPerTick += this.glycolysisPerTick;
         this.body.blood.lactate += this.glycolysisPerTick;
         var kcalgenerated = (this.oxidationPerTick + this.glycogenOxidizedPerTick) * 0.004 + (this.glycolysisPerTick * 0.004/15.0);

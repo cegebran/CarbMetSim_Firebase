@@ -144,7 +144,9 @@ class Liver {
         scale *= this.body.insulinImpactOnGlycogenBreakdownInLiver();
         
         x = glycogenToGlucose__;/////////////////////Need to change this
+
         var fromGlycogen = scale * x * (this.body.bodyWeight_ )/ 1000.0;
+                   
         
         if( fromGlycogen > this.glycogen ){
             fromGlycogen = this.glycogen;
