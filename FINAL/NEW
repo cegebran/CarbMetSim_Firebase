@@ -1,0 +1,5 @@
+1. Unable to stop the running at the target, either stopping too early or too late
+2. Values are coming so much larger or so much smaller
+3. Causes are poisson process is giving the random numbers because of which the problem is occuring
+4. Trying to find the exact random generator use some of the java packages in the script
+5. Other than that the code is running.
